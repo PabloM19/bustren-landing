@@ -1,0 +1,15 @@
+# El HTML declara noindex. Los rastreadores deben poder leer esas metaetiquetas.
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
