@@ -1,18 +1,45 @@
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Users } from 'lucide-react'
+import { CountUp } from '../components/CountUp'
+import { PageHead } from '../components/PageHead'
+import { PresenceGrid } from '../components/PresenceGrid'
 import { useLocale } from '../context/LocaleContext'
-import { CountryFlag } from '../components/CountryFlag'
-import { countriesPresence } from '../data/content'
+import { team } from '../data/content'
+
+function TeamCard({
+  name,
+  role,
+  photo,
+}: {
+  name: string
+  role: string
+  photo?: string
+}) {
+  const [broken, setBroken] = useState(false)
+  const showPhoto = Boolean(photo) && !broken
+
+  return (
+    <article className="team-card">
+      <div className={`team-card__media${showPhoto ? '' : ' is-fallback'}`}>
+        {showPhoto ? (
+          <img src={photo} alt={name} onError={() => setBroken(true)} />
+        ) : (
+          <Users className="team-card__icon" strokeWidth={1.15} aria-hidden />
+        )}
+      </div>
+      <h3>{name}</h3>
+      <p>{role}</p>
+    </article>
+  )
+}
 
 export function Company() {
   const { locale, copy } = useLocale()
 
   return (
     <div className="page">
-      <header className="page-head">
-        <div className="wrap">
-          <h1>{copy.company.title}</h1>
-        </div>
-      </header>
+      <PageHead kicker={copy.company.kicker} title={copy.company.title} lead={copy.company.founded} />
 
       <section className="split">
         <img
@@ -65,15 +92,15 @@ export function Company() {
         </div>
         <div className="wrap stats stats--tight">
           <article>
-            <p className="stats__value">199 km</p>
+            <CountUp from={1} to={199} unit="km" locale={locale} />
             <p className="stats__label">{locale === 'es' ? 'Túnel · Madrid 1995-2007' : 'Tunnel · Madrid 1995-2007'}</p>
           </article>
           <article>
-            <p className="stats__value">156</p>
+            <CountUp from={1} to={156} locale={locale} />
             <p className="stats__label">{locale === 'es' ? 'Estaciones en ese periodo' : 'Stations in that period'}</p>
           </article>
           <article>
-            <p className="stats__value">2012</p>
+            <CountUp from={2012} to={2012} locale={locale} />
             <p className="stats__label">{locale === 'es' ? 'Año de constitución' : 'Year founded'}</p>
           </article>
         </div>
@@ -83,43 +110,48 @@ export function Company() {
         <div className="wrap">
           <p className="kicker kicker--light">{locale === 'es' ? 'Extensión' : 'Reach'}</p>
           <h2>{locale === 'es' ? 'Nueve países de actividad' : 'Nine countries of activity'}</h2>
-          <ul className="coords">
-            {countriesPresence.map((c) => (
-              <li key={c.code}>
-                <CountryFlag iso={c.code} size="md" />
-                <strong>{locale === 'es' ? c.nameEs : c.nameEn}</strong>
-                <em>{c.coord}</em>
-              </li>
-            ))}
-          </ul>
+          <PresenceGrid />
         </div>
       </section>
 
-      <section className="band">
-        <div className="wrap split-text">
-          <div>
-            <p className="kicker">{locale === 'es' ? 'Equipo' : 'Team'}</p>
-            <h2>
-              {locale === 'es'
-                ? 'Ingenieros, arquitectos y asesores de experiencia senior'
-                : 'Engineers, architects and senior advisors'}
-            </h2>
+      <section className="band team-band">
+        <Users className="team-band__mark" strokeWidth={1.05} aria-hidden />
+        <div className="wrap">
+          <div className="split-text">
+            <div>
+              <p className="kicker">{locale === 'es' ? 'Equipo' : 'Team'}</p>
+              <h2>
+                {locale === 'es'
+                  ? 'Ingenieros, arquitectos y asesores de experiencia senior'
+                  : 'Engineers, architects and senior advisors'}
+              </h2>
+            </div>
+            <div>
+              <p>
+                {locale === 'es'
+                  ? 'La empresa cuenta con un equipo de ingenieros y arquitectos de amplia experiencia, completado con un grupo de asesores expertos de dilatada trayectoria profesional. El perfil cubre arquitectura y sistemas, movilidad y demanda, obra civil, telecomunicaciones y señalización, y operación y material rodante.'
+                  : 'The company has a team of highly experienced engineers and architects, completed by expert advisors with a long professional record. The profile covers architecture and systems, mobility and demand, civil works, telecommunications and signalling, and operation and rolling stock.'}
+              </p>
+              <p>
+                {locale === 'es'
+                  ? 'Esa composición permite acompañar todas las fases del proyecto sin cambiar de interlocutor técnico.'
+                  : 'That composition makes it possible to accompany every project phase without changing technical counterpart.'}
+              </p>
+            </div>
           </div>
-          <div>
-            <p>
-              {locale === 'es'
-                ? 'La empresa cuenta con un equipo de ingenieros y arquitectos de amplia experiencia, completado con un grupo de asesores expertos de dilatada trayectoria profesional. El perfil cubre arquitectura y sistemas, movilidad y demanda, obra civil, telecomunicaciones y señalización, y operación y material rodante.'
-                : 'The company has a team of highly experienced engineers and architects, completed by expert advisors with a long professional record. The profile covers architecture and systems, mobility and demand, civil works, telecommunications and signalling, and operation and rolling stock.'}
-            </p>
-            <p>
-              {locale === 'es'
-                ? 'Esa composición permite acompañar todas las fases del proyecto sin cambiar de interlocutor técnico.'
-                : 'That composition makes it possible to accompany every project phase without changing technical counterpart.'}
-            </p><br />
-            <Link to="/contacto" className="btn btn--red">
-              {copy.nav.meeting}
-            </Link>
+          <div className="team-grid">
+            {team.map((person) => (
+              <TeamCard
+                key={person.name}
+                name={person.name}
+                role={locale === 'es' ? person.roleEs : person.roleEn}
+                photo={person.photo}
+              />
+            ))}
           </div>
+          <Link to="/contacto" className="btn btn--red">
+            {copy.nav.meeting}
+          </Link>
         </div>
       </section>
     </div>

@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import { useLocale } from '../context/LocaleContext'
-import { CountryFlag } from '../components/CountryFlag'
+import { CountUp } from '../components/CountUp'
 import { CountryLabel } from '../components/CountryLabel'
-import { countriesPresence, serviceCycle } from '../data/content'
+import { CtaBand } from '../components/CtaBand'
+import { PresenceGrid } from '../components/PresenceGrid'
+import { useLocale } from '../context/LocaleContext'
+import { serviceCycle } from '../data/content'
 import { getProjectById } from '../data/projects'
 
 const featuredIds = ['quito-l1', 'panama-2a', 'lima-l3', 'chamartin']
@@ -23,7 +25,11 @@ export function Home() {
         <div className="hero__mask" />
         <div className="wrap hero__content">
           <p className="kicker kicker--light">{copy.hero.kicker}</p>
-          <h1>{copy.hero.title}</h1>
+          <h1>
+            {copy.hero.titleLine1}
+            <br />
+            {copy.hero.titleLine2}
+          </h1>
           <p className="hero__lead">{copy.hero.lead}</p>
           <div className="hero__actions">
             <Link to="/proyectos" className="btn btn--red">
@@ -33,7 +39,6 @@ export function Home() {
               {copy.hero.ctaMeeting}
             </Link>
           </div>
-          <p className="hero__presence">{copy.hero.presence}</p>
         </div>
       </section>
 
@@ -44,23 +49,23 @@ export function Home() {
           <p className="note">{copy.figures.note}</p>
           <div className="stats">
             <article>
-              <p className="stats__value">22 km</p>
+              <CountUp to={22} unit="km" locale={locale} />
               <p className="stats__label">
                 {locale === 'es' ? 'Túnel · Metro de Quito L1' : 'Tunnel · Quito Metro L1'}
               </p>
             </article>
             <article>
-              <p className="stats__value">15</p>
+              <CountUp to={15} locale={locale} />
               <p className="stats__label">{locale === 'es' ? 'Estaciones · Quito L1' : 'Stations · Quito L1'}</p>
             </article>
             <article>
-              <p className="stats__value">46.000 m²</p>
+              <CountUp to={46000} unit="m²" locale={locale} />
               <p className="stats__label">
                 {locale === 'es' ? 'Intercambiador de Moncloa' : 'Moncloa Interchange'}
               </p>
             </article>
             <article>
-              <p className="stats__value">9</p>
+              <CountUp to={9} locale={locale} />
               <p className="stats__label">{locale === 'es' ? 'Países de actividad' : 'Countries of activity'}</p>
             </article>
           </div>
@@ -72,15 +77,7 @@ export function Home() {
           <p className="kicker kicker--light">{copy.map.kicker}</p>
           <h2>{copy.map.title}</h2>
           <p className="lead-ink">{copy.map.lead}</p>
-          <ul className="coords">
-            {countriesPresence.map((c) => (
-              <li key={c.code}>
-                <CountryFlag iso={c.code} size="md" />
-                <strong>{locale === 'es' ? c.nameEs : c.nameEn}</strong>
-                <em>{c.coord}</em>
-              </li>
-            ))}
-          </ul>
+          <PresenceGrid showList />
         </div>
       </section>
 
@@ -135,8 +132,15 @@ export function Home() {
           <ol className="cycle">
             {serviceCycle.slice(0, 4).map((s) => (
               <li key={s.n}>
-                <span>{s.n}</span>
-                <h3>{locale === 'es' ? s.titleEs : s.titleEn}</h3>
+                <span className="cycle__bg" aria-hidden>
+                  <img src={s.img} alt="" />
+                  <span className="cycle__veil" />
+                </span>
+                <div className="cycle__copy">
+                  <span>{s.n}</span>
+                  <h3>{locale === 'es' ? s.titleEs : s.titleEn}</h3>
+                  <p>{locale === 'es' ? s.textEs : s.textEn}</p>
+                </div>
               </li>
             ))}
           </ol>
@@ -159,16 +163,12 @@ export function Home() {
         </div>
       </section>
 
-      <section className="cta-band">
-        <div className="wrap">
-          <p className="kicker kicker--light">{copy.close.kicker}</p>
-          <h2>{copy.close.title}</h2>
-          <p>{copy.close.lead}</p>
-          <Link to="/contacto" className="btn btn--red">
-            {copy.close.cta}
-          </Link>
-        </div>
-      </section>
+      <CtaBand
+        kicker={copy.close.kicker}
+        title={copy.close.title}
+        lead={copy.close.lead}
+        cta={copy.close.cta}
+      />
     </>
   )
 }

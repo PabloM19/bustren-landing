@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
+import { PageHead } from '../components/PageHead'
 import { useLocale } from '../context/LocaleContext'
 
 export function Legal() {
@@ -11,11 +12,7 @@ export function Legal() {
 
   return (
     <div className="page">
-      <header className="page-head">
-        <div className="wrap">
-          <h1>{title}</h1>
-        </div>
-      </header>
+      <PageHead kicker="BUSTREN PM" title={title} />
       <section className="band">
         <div className="wrap legal">
           {kind === 'legal' && (

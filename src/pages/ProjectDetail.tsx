@@ -1,6 +1,9 @@
 import { Link, useParams } from 'react-router-dom'
-import { ArrowLeft, ArrowRight } from 'lucide-react'
+import { ArrowLeft } from 'lucide-react'
+import { CountryLabel } from '../components/CountryLabel'
+import { CtaBand } from '../components/CtaBand'
 import { useLocale } from '../context/LocaleContext'
+import { metricWithUnit } from '../lib/metricValue'
 import {
   getProjectById,
   getProjectBySlug,
@@ -39,8 +42,15 @@ export function ProjectDetail() {
           <Link to="/proyectos" className="text-link">
             <ArrowLeft size={16} /> {copy.detail.back}
           </Link>
-          <p className="kicker">
-            {locale === 'es' ? project.country : project.countryEn} · {project.city} · {project.years}
+          <p className="kicker kicker--with-flag">
+            <CountryLabel
+              name={locale === 'es' ? project.country : project.countryEn}
+              lookupName={project.country}
+            />
+            <span className="kicker__sep" aria-hidden>
+              ·
+            </span>
+            {project.city} · {project.years}
           </p>
           <h1>{title}</h1>
           <p className="case-hero__service">
@@ -55,7 +65,7 @@ export function ProjectDetail() {
             {project.metrics.map((m) => (
               <div key={m.value + m.labelEs}>
                 <dt>{locale === 'es' ? m.labelEs : m.labelEn}</dt>
-                <dd>{m.value}</dd>
+                <dd>{metricWithUnit(m.value)}</dd>
               </div>
             ))}
             {project.investment && (
@@ -115,7 +125,12 @@ export function ProjectDetail() {
                   <Link key={p.id} to={`/proyectos/${p.slug}`} className="related__item">
                     <img src={p.coverImage} alt="" />
                     <div>
-                      <p className="kicker">{locale === 'es' ? p.country : p.countryEn}</p>
+                      <p className="kicker kicker--with-flag">
+                        <CountryLabel
+                          name={locale === 'es' ? p.country : p.countryEn}
+                          lookupName={p.country}
+                        />
+                      </p>
                       <h3>{locale === 'es' ? p.titleEs : p.titleEn}</h3>
                     </div>
                   </Link>
@@ -126,14 +141,7 @@ export function ProjectDetail() {
         </section>
       )}
 
-      <section className="cta-band">
-        <div className="wrap">
-          <h2>{copy.detail.cta}</h2>
-          <Link to="/contacto" className="btn btn--red">
-            {copy.nav.meeting} <ArrowRight size={16} />
-          </Link>
-        </div>
-      </section>
+      <CtaBand title={copy.detail.cta} cta={copy.nav.meeting} />
     </article>
   )
 }

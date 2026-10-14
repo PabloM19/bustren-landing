@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useRef, useState, type ReactNode } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import {
   ArrowLeftRight,
   ArrowUpRight,
@@ -14,7 +14,9 @@ import {
 } from 'lucide-react'
 import { CountryFlag } from '../components/CountryFlag'
 import { CountryLabel } from '../components/CountryLabel'
+import { PageHead } from '../components/PageHead'
 import { useLocale } from '../context/LocaleContext'
+import { metricWithUnit } from '../lib/metricValue'
 import { countryIsoFromName } from '../lib/countryIso'
 import {
   countries,
@@ -148,6 +150,7 @@ function FilterFacet({
 
 export function Projects() {
   const { locale, copy } = useLocale()
+  const [searchParams] = useSearchParams()
   const [q, setQ] = useState('')
   const [country, setCountry] = useState('')
   const [service, setService] = useState('')
@@ -156,6 +159,11 @@ export function Projects() {
   const [year, setYear] = useState('')
   const [menu, setMenu] = useState<string | null>(null)
   const barRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const pais = searchParams.get('pais') ?? ''
+    if (pais && countries.includes(pais)) setCountry(pais)
+  }, [searchParams])
 
   const filtered = useMemo(() => {
     return projects.filter((p) => {
@@ -222,12 +230,7 @@ export function Projects() {
 
   return (
     <div className="page">
-      <header className="page-head">
-        <div className="wrap">
-          <h1>{copy.projects.title}</h1>
-          <p className="page-head__lead">{copy.projects.lead}</p>
-        </div>
-      </header>
+      <PageHead kicker={copy.projects.kicker} title={copy.projects.title} lead={copy.projects.lead} />
 
       <div className="wrap">
         <div className="filter-bar" ref={barRef}>
@@ -326,7 +329,7 @@ export function Projects() {
                       lookupName={p.country}
                     />
                   </span>
-                  {p.metrics[0] && <span className="p-card__stat">{p.metrics[0].value}</span>}
+                  {p.metrics[0] && <span className="p-card__stat">{metricWithUnit(p.metrics[0].value)}</span>}
                 </div>
                 <div className="p-card__body">
                   <p className="kicker">

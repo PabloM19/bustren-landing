@@ -18,6 +18,8 @@ export const t = {
     hero: {
       kicker: 'Ingeniería · Arquitectura · Consultoría',
       title: 'Experiencia para dirigir infraestructuras que conectan ciudades',
+      titleLine1: 'Experiencia para dirigir',
+      titleLine2: 'infraestructuras que conectan ciudades',
       lead: 'Ingeniería, arquitectura y consultoría especializada en sistemas de transporte, desde la planificación hasta la puesta en servicio.',
       ctaProjects: 'Explorar proyectos',
       ctaMeeting: 'Solicitar reunión',
@@ -35,7 +37,7 @@ export const t = {
     },
     featured: {
       kicker: '03 — Portfolio',
-      title: 'Proyectos que se pueden presentar a un cliente',
+      title: 'Portfolio destacado',
       all: 'Ver todos los proyectos',
     },
     areas: {
@@ -63,6 +65,7 @@ export const t = {
     services: {
       kicker: 'Servicios',
       title: 'Un ciclo completo, sin saltos de especialidad',
+      more: 'Ver más',
     },
     buildingPage: {
       kicker: 'Edificación',
@@ -116,6 +119,13 @@ export const t = {
       address: 'Méndez Álvaro, 56, 28045 Madrid, España',
       phone: '+34 91 434 22 80',
       mail: 'info@bustrenpm.es',
+      placeholders: {
+        name: 'John Smith',
+        org: 'Tu empresa',
+        country: 'España',
+        email: 'nombre@empresa.com',
+        message: 'Cuéntanos el encargo, el país y el plazo previsto.',
+      },
     },
     cookies: {
       title: 'Cookies',
@@ -162,6 +172,8 @@ export const t = {
     hero: {
       kicker: 'Engineering · Architecture · Consulting',
       title: 'Experience to lead infrastructure that connects cities',
+      titleLine1: 'Experience to lead',
+      titleLine2: 'infrastructure that connects cities',
       lead: 'Engineering, architecture and consulting specialised in transport systems, from planning to commissioning.',
       ctaProjects: 'Explore projects',
       ctaMeeting: 'Request a meeting',
@@ -179,7 +191,7 @@ export const t = {
     },
     featured: {
       kicker: '03 — Portfolio',
-      title: 'Projects that can be presented to a client',
+      title: 'Featured portfolio',
       all: 'View all projects',
     },
     areas: {
@@ -207,6 +219,7 @@ export const t = {
     services: {
       kicker: 'Services',
       title: 'A complete cycle, without a change of specialty',
+      more: 'See more',
     },
     buildingPage: {
       kicker: 'Buildings',
@@ -260,6 +273,13 @@ export const t = {
       address: 'Méndez Álvaro, 56, 28045 Madrid, Spain',
       phone: '+34 91 434 22 80',
       mail: 'info@bustrenpm.es',
+      placeholders: {
+        name: 'John Smith',
+        org: 'Your company',
+        country: 'Spain',
+        email: 'name@company.com',
+        message: 'Tell us about the assignment, the country and the expected timeline.',
+      },
     },
     cookies: {
       title: 'Cookies',
@@ -312,6 +332,7 @@ export const serviceCycle = [
       'Diagnóstico, corredores, alternativas, demanda, modelización de la movilidad, ubicación de estaciones e intercambiadores, viabilidad y proyectos básicos.',
     textEn:
       'Diagnosis, corridors, alternatives, demand, mobility modelling, station and interchange siting, feasibility and basic projects.',
+    img: '/images/projects/quito-excavacion.jpg',
   },
   {
     n: '02',
@@ -321,6 +342,7 @@ export const serviceCycle = [
       'Lectura del ciclo completo: estudios y proyectos, obra civil y sistemas, material móvil, explotación, mantenimiento y esquemas concesionales.',
     textEn:
       'Reading of the full cycle: studies and projects, civil works and systems, rolling stock, operation, maintenance and concession schemes.',
+    img: '/images/projects/detalle-obra.jpg',
   },
   {
     n: '03',
@@ -330,6 +352,7 @@ export const serviceCycle = [
       'Proyectos constructivos de obra civil, instalaciones y sistemas, especificaciones de material móvil, y preparación de licitaciones y pliegos.',
     textEn:
       'Civil construction projects, installations and systems, rolling-stock specifications, and preparation of tenders and contract documents.',
+    img: '/images/projects/sistemas.jpg',
   },
   {
     n: '04',
@@ -339,6 +362,7 @@ export const serviceCycle = [
       'Consultoría y gerencia para implementar y poner en servicio metro, ferrocarril, metro ligero, tranvía, BRT y transporte por cable, con base en Madrid y Quito.',
     textEn:
       'Consulting and project management to implement and commission metro, rail, light rail, tram, BRT and cable systems, grounded in Madrid and Quito.',
+    img: '/images/projects/plataforma.jpg',
   },
   {
     n: '05',
@@ -348,6 +372,7 @@ export const serviceCycle = [
       'Dirección de obras civiles, asesoría geotécnica, control de calidad, auscultación, seguridad y salud, y puesta en obra de instalaciones y sistemas.',
     textEn:
       'Civil works direction, geotechnical advice, quality control, monitoring, health and safety, and installation of systems.',
+    img: '/images/projects/tunel-obra.jpg',
   },
   {
     n: '06',
@@ -357,6 +382,7 @@ export const serviceCycle = [
       'Protocolos y pruebas de recepción, certificación de instalaciones y sistemas, y asistencia para la puesta en servicio.',
     textEn:
       'Reception protocols and tests, certification of installations and systems, and assistance for commissioning.',
+    img: '/images/projects/andenes.jpg',
   },
   {
     n: '07',
@@ -366,6 +392,7 @@ export const serviceCycle = [
       'Análisis y diseño de operación, supervisión de la explotación y soporte al mantenimiento una vez la infraestructura está en servicio.',
     textEn:
       'Operation analysis and design, supervision of service and support to maintenance once the infrastructure is in operation.',
+    img: '/images/projects/via.jpg',
   },
   {
     n: '08',
@@ -375,5 +402,15 @@ export const serviceCycle = [
       'Asesoramiento experto a organismos de inversión como el Banco Mundial y CAF en materia de infraestructuras ferroviarias.',
     textEn:
       'Expert advice to investment bodies such as the World Bank and CAF on railway infrastructure.',
+    img: '/images/projects/arquitectura.jpg',
+  },
+]
+
+export const team = [
+  {
+    name: 'Sara Santaolalla',
+    roleEs: 'Arquitectura e infraestructura',
+    roleEn: 'Architecture and infrastructure',
+    photo: '/images/team/sara-santaolalla.jpg',
   },
 ]

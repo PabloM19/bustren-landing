@@ -14,22 +14,29 @@ import {
   Phone,
   Send,
   TrainFront,
-  TrainTrack,
   TramFront,
   User,
 } from 'lucide-react'
 import { Logo } from '../components/Logo'
+import { PageHead } from '../components/PageHead'
 import { useLocale } from '../context/LocaleContext'
 import { useTheme } from '../context/ThemeContext'
+import { infrastructureLabels, type InfrastructureType } from '../data/projects'
 
-const projectTypes: { value: string; es: string; en: string; icon: ReactNode }[] = [
-  { value: 'metro', es: 'Metro', en: 'Metro', icon: <TrainFront size={16} /> },
-  { value: 'rail', es: 'Ferrocarril', en: 'Railway', icon: <TrainTrack size={16} /> },
-  { value: 'interchange', es: 'Intercambiador', en: 'Interchange', icon: <ArrowLeftRight size={16} /> },
-  { value: 'station', es: 'Estación / edificación', en: 'Station / building', icon: <Landmark size={16} /> },
-  { value: 'tram', es: 'Tranvía', en: 'Tram', icon: <TramFront size={16} /> },
-  { value: 'other', es: 'Otro', en: 'Other', icon: <Layers size={16} /> },
-]
+const typeIcons: Record<InfrastructureType, ReactNode> = {
+  metro: <TrainFront size={16} />,
+  tram: <TramFront size={16} />,
+  interchange: <ArrowLeftRight size={16} />,
+  station: <Landmark size={16} />,
+  building: <Building2 size={16} />,
+}
+
+const projectTypes = (Object.keys(infrastructureLabels) as InfrastructureType[]).map((value) => ({
+  value,
+  es: infrastructureLabels[value].es,
+  en: infrastructureLabels[value].en,
+  icon: typeIcons[value],
+}))
 
 type Errors = Partial<Record<'name' | 'org' | 'country' | 'email' | 'type' | 'message' | 'privacy', string>>
 
@@ -99,6 +106,7 @@ export function Contact() {
     key: 'name' | 'org' | 'country' | 'email',
     label: string,
     icon: ReactNode,
+    placeholder: string,
     type = 'text',
   ) => (
     <label className={`field${errors[key] ? ' is-error' : ''}`}>
@@ -108,6 +116,7 @@ export function Contact() {
         <input
           type={type}
           value={values[key]}
+          placeholder={placeholder}
           onChange={(e) => setValues((v) => ({ ...v, [key]: e.target.value }))}
         />
       </span>
@@ -117,12 +126,7 @@ export function Contact() {
 
   return (
     <div className="page">
-      <header className="page-head">
-        <div className="wrap">
-          <h1>{copy.contact.title}</h1>
-          <p className="page-head__lead">{copy.contact.lead}</p>
-        </div>
-      </header>
+      <PageHead kicker={copy.contact.kicker} title={copy.contact.title} lead={copy.contact.lead} />
 
       <section className="band">
         <div className="wrap contact-grid">
@@ -159,12 +163,12 @@ export function Contact() {
           ) : (
             <form className="form" onSubmit={onSubmit} noValidate>
               <div className="form__row">
-                {field('name', copy.contact.name, <User size={16} />)}
-                {field('org', copy.contact.org, <Building2 size={16} />)}
+                {field('name', copy.contact.name, <User size={16} />, copy.contact.placeholders.name)}
+                {field('org', copy.contact.org, <Building2 size={16} />, copy.contact.placeholders.org)}
               </div>
               <div className="form__row">
-                {field('country', copy.contact.country, <Globe size={16} />)}
-                {field('email', copy.contact.email, <Mail size={16} />, 'email')}
+                {field('country', copy.contact.country, <Globe size={16} />, copy.contact.placeholders.country)}
+                {field('email', copy.contact.email, <Mail size={16} />, copy.contact.placeholders.email, 'email')}
               </div>
               <label className={`field${errors.type ? ' is-error' : ''}`} ref={typeRef}>
                 <span>{copy.contact.type}</span>
@@ -221,6 +225,7 @@ export function Contact() {
                   <textarea
                     rows={5}
                     value={values.message}
+                    placeholder={copy.contact.placeholders.message}
                     onChange={(e) => setValues((v) => ({ ...v, message: e.target.value }))}
                   />
                 </span>

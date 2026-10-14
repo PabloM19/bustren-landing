@@ -1,4 +1,6 @@
 import { Link } from 'react-router-dom'
+import { CtaBand } from '../components/CtaBand'
+import { PageHead } from '../components/PageHead'
 import { useLocale } from '../context/LocaleContext'
 
 const themes = [
@@ -57,16 +59,15 @@ export function Building() {
 
   return (
     <div className="page">
-      <header className="page-head">
-        <div className="wrap">
-          <h1>{copy.buildingPage.title}</h1>
-          <p className="page-head__lead">
-            {locale === 'es'
-              ? 'La edificación no es un anexo decorativo. En BUSTREN forma parte del sistema de transporte: estaciones, intercambiadores, patios y edificios vinculados a la explotación.'
-              : 'Buildings are not a decorative annex. At BUSTREN they are part of the transport system: stations, interchanges, depots and buildings linked to operation.'}
-          </p>
-        </div>
-      </header>
+      <PageHead
+        kicker={copy.buildingPage.kicker}
+        title={copy.buildingPage.title}
+        lead={
+          locale === 'es'
+            ? 'La edificación no es un anexo decorativo. En BUSTREN forma parte del sistema de transporte: estaciones, intercambiadores, patios y edificios vinculados a la explotación.'
+            : 'Buildings are not a decorative annex. At BUSTREN they are part of the transport system: stations, interchanges, depots and buildings linked to operation.'
+        }
+      />
 
       <section className="split">
         <img src="/images/building/chamartin-1.jpg" alt="Chamartín" style={{ objectPosition: 'center 30%' }} />
@@ -112,18 +113,19 @@ export function Building() {
         </div>
       </section>
 
-      <section className="cta-band">
-        <div className="wrap">
-          <h2>
-            {locale === 'es'
-              ? 'Estación y ciudad se resuelven juntas'
-              : 'Station and city are resolved together'}
-          </h2>
-          <Link to="/contacto" className="btn btn--red">
-            {copy.nav.meeting}
-          </Link>
-        </div>
-      </section>
+      <CtaBand
+        title={
+          locale === 'es'
+            ? 'Estación y ciudad se resuelven juntas'
+            : 'Station and city are resolved together'
+        }
+        lead={
+          locale === 'es'
+            ? 'Arquitectura, movilidad y explotación se resuelven en el mismo encargo.'
+            : 'Architecture, mobility and operation are resolved in the same assignment.'
+        }
+        cta={copy.nav.meeting}
+      />
     </div>
   )
 }
